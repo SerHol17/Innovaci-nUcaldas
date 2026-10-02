@@ -7,4 +7,10 @@
   <url>
     <loc>http://localhost:3000/unidad1</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/unidad2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/unidad2-1</loc>
+  </url>
 </urlset>
