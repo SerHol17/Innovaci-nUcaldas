@@ -1,0 +1,28 @@
+version: 1
+extends: []
+project:
+  id: estrategias-transformacion-digital
+  title: Estrategias de Transformación Digital
+  subtitle: Maestría en Ingeniería Computacional · Universidad de Caldas
+  authors:
+    - name: Sergio Alejandro Holguín García
+      affiliations:
+        - Universidad de Caldas
+  keywords:
+    - transformación digital
+    - inteligencia artificial
+    - big data
+    - cloud computing
+    - gestión del cambio
+  github: https://github.com/BioAITeamLearning
+  toc:
+    - file: index.md
+    - file: Unidad1.md
+  exclude:
+    - venv/**
+    - _build/**
+site:
+  template: book-theme
+  title: Estrategias de Transformación Digital
+  options:
+    logo: _static/images/LogoUdeCaldas.png

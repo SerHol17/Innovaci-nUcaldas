@@ -1,0 +1,31 @@
+# Motor del libro (Jupyter Book 2 / mystmd) — validado estable en sandbox el 2026-09-28
+jupyter-book==2.1.7
+jupyter_server
+ipykernel
+
+# Análisis de datos y laboratorios (Unidad 2, 4, 5)
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+scikit-learn
+
+# Big data (Unidad 2 — laboratorio de analítica avanzada)
+# pyspark es pesado: instalar solo si el laboratorio de big data lo requiere en Sergio's máquina
+# pyspark
+
+# Consumo de APIs / servicios cloud (Unidad 2 y 4)
+requests
+python-dotenv
+
+# Cloud (elegir según el proveedor que se use en el laboratorio de Unidad 2)
+# boto3          # AWS
+# azure-storage-blob  # Azure
+# google-cloud-storage  # GCP
+
+# Gestión de proyectos / tableros (Unidad 3, opcional si se automatiza el taller Kanban)
+# jira
+
+# Blockchain (Unidad 2 — demo de contrato inteligente simple)
+# web3
