@@ -1,0 +1,175 @@
+---
+title: Unidad 2 · Tecnologías Emergentes
+---
+
+# Unidad 2 — Tecnologías Emergentes y su Impacto en la Transformación Digital
+
+
+```{admonition} Objetivo de la unidad
+:class: tip
+Comprender, a nivel aplicado, las cuatro tecnologías que más están habilitando la transformación digital hoy — inteligencia artificial y machine learning, big data y analítica avanzada, blockchain, y cloud computing — y practicar con cada una sobre casos de negocio concretos.
+```
+
+**Resultados de aprendizaje asociados:** R2 (implementar soluciones tecnológicas para la adopción de tecnologías digitales en entornos organizacionales) y R3 (analizar y resolver problemas relacionados con la transformación digital utilizando herramientas de inteligencia artificial, big data y computación en la nube). Esta unidad presenta los fundamentos conceptuales de cada tecnología y cómo se traducen en decisiones de negocio; los laboratorios prácticos sobre estos mismos temas se incorporarán más adelante dentro de cada sección.
+
+## 2.1 Inteligencia artificial y machine learning en la digitalización
+
+El machine learning (aprendizaje automático) es la rama de la inteligencia artificial que permite que un sistema mejore su desempeño en una tarea a partir de datos, sin que un humano programe explícitamente cada regla. En el contexto de transformación digital, lo relevante no es el detalle matemático de cada algoritmo, sino entender qué tipo de problema de negocio resuelve cada enfoque, para poder decidir cuál aplicar — otra manifestación del criterio build vs. buy vs. adopt visto en la Unidad 1: muchas veces la pregunta no es "qué algoritmo uso" sino "compro una solución de IA ya entrenada o entreno la mía propia con mis datos".
+
+Existen varias grandes familias de problemas de machine learning, según de dónde saca el modelo la señal que le permite aprender — se desarrollan en detalle en la sección 2.1.
+
+```{figure} _static/images/u2-ml-mapa.jpg
+:name: fig-u2-ml-mapa
+:alt: Mapa de la inteligencia artificial, el machine learning y sus enfoques principales
+:width: 80%
+
+Ubicación del machine learning dentro de la inteligencia artificial, y sus grandes enfoques.
+```
+
+
+
+### Aprendizaje supervisado
+
+En el aprendizaje supervisado, el modelo aprende a partir de ejemplos donde ya se conoce la respuesta correcta (la "etiqueta"). Por ejemplo, para predecir si un cliente va a cancelar su servicio (churn), se entrena el modelo con el historial de clientes que ya cancelaron o no cancelaron en el pasado: cada cliente histórico llega al modelo descrito por un conjunto de atributos (antigüedad, nivel de consumo, número de quejas, etc.) junto con el desenlace real que tuvo. El modelo aprende el patrón que distingue a quienes cancelaron de quienes no, y luego lo aplica a clientes nuevos cuyo desenlace todavía no se conoce, asignándoles una probabilidad de cancelar. Los dos tipos de problema supervisado más comunes son **clasificación** (la respuesta es una categoría, como "cancela" / "no cancela") y **regresión** (la respuesta es un número, como el precio estimado de una propiedad).
+
+Un banco que quiere anticipar el riesgo de impago de un crédito, una aerolínea que quiere predecir cuántos pasajeros no se presentarán a un vuelo (no-show), o una empresa de telecomunicaciones que quiere identificar a los clientes con mayor probabilidad de cambiarse a la competencia, son todos ejemplos del mismo patrón: existe un historial con el desenlace ya conocido, y se busca anticipar ese desenlace para casos nuevos.
+
+### Aprendizaje no supervisado
+
+En el aprendizaje no supervisado no existe una etiqueta previa: el modelo busca estructura o patrones dentro de los datos por sí mismo. El caso más común en contextos de negocio es la **segmentación**: agrupar clientes, productos o transacciones en conjuntos similares entre sí, sin que nadie haya definido de antemano cuáles son esos grupos. Esto es útil, por ejemplo, para diseñar campañas de marketing diferenciadas, o para identificar perfiles de riesgo que no eran evidentes a simple vista. El algoritmo más usado para esto, K-Means, agrupa los datos buscando un número definido de "centros" tales que cada punto quede lo más cerca posible del centro de su propio grupo: una cadena de retail podría descubrir, sin haberlo definido de antemano, que sus clientes se agrupan naturalmente en perfiles como "compradores frecuentes de bajo monto", "compradores ocasionales de alto monto" y así sucesivamente, y diseñar una estrategia comercial distinta para cada perfil.
+
+### Métricas: ¿cómo saber si un modelo sirve?
+
+Para el aprendizaje supervisado, la elección de qué métrica priorizar depende del problema de negocio, no es automática:
+
+- **Exactitud (accuracy):** proporción de predicciones correctas sobre el total. Engañosa cuando las clases están desbalanceadas — un modelo que siempre predice "no cancela" puede tener 90% de exactitud si solo el 10% de los clientes cancela, sin ser útil en absoluto.
+- **Precisión (precision):** de todos los casos que el modelo marcó como positivos, qué proporción realmente lo eran. Importa cuando el costo de un falso positivo es alto (por ejemplo, acusar de fraude a un cliente honesto).
+- **Exhaustividad (recall):** de todos los casos positivos reales, qué proporción el modelo logró detectar. Importa cuando el costo de no detectar un caso real es alto (por ejemplo, no detectar un fraude real).
+- **F1-score:** combina precisión y exhaustividad en un solo número, útil cuando se necesita balancear ambas.
+
+Para el aprendizaje no supervisado, al no existir una respuesta "correcta" contra la cual comparar, se usan métricas internas como el **coeficiente de silueta**, que mide qué tan bien separados y compactos quedan los grupos encontrados (valores cercanos a 1 indican grupos bien definidos; cercanos a 0 o negativos indican grupos superpuestos o mal definidos).
+
+```{figure} _static/images/u2-matriz-confusion.jpg
+:name: fig-u2-matriz-confusion
+:alt: Diagrama ilustrativo de una matriz de confusión
+:width: 70%
+
+La matriz de confusión como base para entender precisión y exhaustividad.
+```
+
+
+
+### Agentes de inteligencia artificial
+
+Un agente de IA se diferencia de un modelo de machine learning tradicional en que no se limita a producir una predicción: tiene autonomía para encadenar varias decisiones, usar herramientas externas (buscar información, consultar una base de datos, llamar una API) y ajustar su siguiente paso según el resultado del paso anterior, persiguiendo un objetivo de más alto nivel. Mientras un modelo de clasificación responde una pregunta puntual ("¿este cliente va a cancelar?"), un agente podría encargarse de todo un proceso ("identifica los clientes en riesgo, redacta una oferta de retención personalizada para cada uno, y prográmale el envío").
+
+Para efectos de este curso, no se espera construir un agente desde cero — es consistente con el criterio de build vs. buy vs. adopt: en la mayoría de los casos de negocio, adoptar una plataforma de agentes ya existente es más razonable que programarla internamente. Esta sección se trabaja como una demostración guiada en clase, usando una plataforma o API ya disponible, para que el equipo vea un agente resolviendo una tarea de varios pasos de forma autónoma, y discuta en qué proceso de la organización elegida para el proyecto final tendría sentido aplicar algo así. Este es un tema que seguirá evolucionando dentro del curso a medida que el enfoque se termine de definir.
+
+## 2.2 Big data y analítica avanzada para la toma de decisiones
+
+El término "big data" no se refiere simplemente a "muchos datos", sino a datos que por su volumen, velocidad de generación o variedad de formato dejan de poder manejarse cómodamente con las herramientas tradicionales (una hoja de cálculo, una sola máquina). Antes de llegar a esa escala, sin embargo, es útil distinguir tres niveles de analítica, porque cada uno responde una pregunta distinta y requiere un nivel de madurez de datos distinto:
+
+- **Analítica descriptiva:** ¿qué pasó? Reportes, tableros, resúmenes de lo que ya ocurrió.
+- **Analítica predictiva:** ¿qué va a pasar? Usa modelos (como los de la sección 2.1) para anticipar un resultado futuro.
+- **Analítica prescriptiva:** ¿qué deberíamos hacer? Va un paso más allá de predecir, y recomienda una acción concreta considerando restricciones y objetivos de negocio.
+
+```{figure} _static/images/u2-bigdata-vs.jpg
+:name: fig-u2-bigdata-vs
+:alt: Los tres niveles de analítica de datos: descriptiva, predictiva y prescriptiva
+:width: 80%
+
+Los tres niveles de analítica, en orden creciente de madurez y de valor para la toma de decisiones.
+```
+
+
+
+La mayoría de las organizaciones todavía opera principalmente en analítica descriptiva. El salto a predictiva y prescriptiva es, en buena medida, lo que distingue a los perfiles "Digirati" del modelo del MIT visto en la Unidad 1.
+
+Mientras el volumen de datos de una organización quepa cómodamente en una sola máquina (algunos millones de filas, un archivo que abre sin problema una herramienta como pandas en Python), el análisis se puede hacer con las herramientas convencionales de ciencia de datos. El problema aparece cuando ese volumen crece varios órdenes de magnitud —sensores IoT generando lecturas cada segundo, el historial transaccional completo de un banco, los registros de navegación de un sitio con millones de visitas diarias— o cuando los datos están distribuidos en muchos archivos o servidores distintos. En ese punto se recurre a herramientas como **Apache Spark**, que distribuye el procesamiento entre varias máquinas trabajando en paralelo: conceptualmente se siguen haciendo las mismas operaciones de siempre (agrupar, agregar, filtrar), pero la ejecución ocurre repartida en un clúster en lugar de en un solo proceso, lo que permite procesar en minutos un volumen de datos que a una sola máquina le tomaría días o que simplemente no le cabría en memoria.
+
+## 2.3 Blockchain y descentralización de procesos
+
+Blockchain es una tecnología de registro distribuido: en lugar de que una sola entidad central (un banco, una notaría, una plataforma) mantenga el registro "oficial" de una serie de transacciones, ese registro se replica entre muchos participantes de una red, y un mecanismo de consenso garantiza que todos coincidan sobre cuál es la versión válida, sin necesidad de confiar en un intermediario único. Una vez que un bloque de información se agrega a la cadena y es validado por la red, modificarlo retroactivamente es extremadamente costoso computacionalmente, lo que le da al registro una propiedad de inmutabilidad práctica.
+
+```{figure} _static/images/u2-blockchain-confianza.jpg
+:name: fig-u2-blockchain-confianza
+:alt: Comparación entre un registro centralizado con intermediario y un registro distribuido tipo blockchain
+:width: 80%
+
+De la confianza en un intermediario central a la confianza distribuida entre los participantes de la red.
+```
+
+
+
+Es importante ser honesto sobre cuándo blockchain **no** es la herramienta adecuada, porque es una de las tecnologías más sobre-aplicadas en los últimos años: si ya existe una entidad en la que todas las partes confían y que puede mantener el registro de forma eficiente (un banco central, un gobierno, una empresa con buena reputación), introducir blockchain añade complejidad y costo computacional sin resolver un problema real. Blockchain aporta valor específicamente cuando el problema central es la **falta de confianza entre partes que no se conocen**, y la coordinación mediante un intermediario tradicional no es viable o es indeseable — por ejemplo, trazabilidad de productos en una cadena de suministro con múltiples empresas independientes, o contratos que deben ejecutarse automáticamente cuando se cumple una condición verificable, sin depender de que una de las partes "decida" cumplir.
+
+Esto último se conoce como **contrato inteligente (smart contract)**: código que se ejecuta automáticamente sobre la blockchain cuando se cumplen ciertas condiciones, sin intervención manual ni posibilidad de que una de las partes se eche para atrás una vez firmado el acuerdo. Un ejemplo típico es un contrato de compraventa que libera el pago al vendedor automáticamente en el momento en que el transportista y el comprador confirman, cada uno con su propia firma digital, que la entrega se realizó — sin que ninguna de las partes tenga que "confiar" en que la otra cumplirá, porque el cumplimiento queda garantizado por el código mismo y por la red que lo ejecuta.
+
+## 2.4 Cloud computing e infraestructura digital
+
+El cloud computing (computación en la nube) consiste en acceder a recursos de cómputo —servidores, almacenamiento, bases de datos, redes— como un servicio a través de internet, pagando por uso, en lugar de comprar y mantener infraestructura física propia. Esto es, en esencia, otra forma del criterio "adopt" visto en la Unidad 1: en vez de construir y operar un centro de datos propio, se adopta la infraestructura de un proveedor especializado.
+
+Los proveedores de nube ofrecen sus servicios en tres niveles, de menor a mayor grado de gestión por parte del proveedor:
+
+- **IaaS (Infraestructura como Servicio):** se alquilan los recursos más básicos —servidores virtuales, almacenamiento, redes— y la organización sigue siendo responsable de instalar y administrar el sistema operativo y el software encima.
+- **PaaS (Plataforma como Servicio):** el proveedor gestiona además el sistema operativo y el entorno de ejecución, y la organización solo se preocupa por desplegar su aplicación.
+- **SaaS (Software como Servicio):** el proveedor entrega una aplicación completa, lista para usar (es la categoría que ya se vio en la Unidad 1 dentro de "adopt").
+
+```{figure} _static/images/u2-cloud-modelos.jpg
+:name: fig-u2-cloud-modelos
+:alt: Los tres modelos de servicio en la nube: IaaS, PaaS y SaaS
+:width: 75%
+
+Los tres modelos de servicio en la nube, según qué capa gestiona el proveedor y qué capa gestiona la organización.
+```
+
+
+
+Los tres proveedores dominantes del mercado —Amazon Web Services (AWS), Microsoft Azure y Google Cloud Platform (GCP)— ofrecen todos una capa gratuita limitada, pensada justamente para que una organización (o un estudiante) pueda tener el primer contacto real con infraestructura en la nube sin incurrir en costos: subir y descargar archivos de un servicio de almacenamiento, levantar una máquina virtual pequeña, o desplegar una base de datos administrada, todo dentro de los límites de la capa gratuita.
+
+```{admonition} Entregable de la unidad
+:class: important
+Por equipo: un párrafo que identifique, para la organización elegida en el proyecto final, un caso de uso concreto para al menos dos de las cuatro tecnologías vistas en esta unidad (IA/ML, big data, blockchain, cloud), justificando por qué esa tecnología específica (y no otra) resolvería mejor el problema identificado.
+```
+
+## Glosario de términos clave
+
+**Machine learning:** rama de la inteligencia artificial en la que un sistema mejora su desempeño en una tarea a partir de datos, sin reglas programadas explícitamente para cada caso.
+
+**Aprendizaje supervisado:** enfoque de machine learning que aprende a partir de datos ya etiquetados con la respuesta correcta.
+
+**Aprendizaje no supervisado:** enfoque de machine learning que busca estructura o patrones en datos sin etiquetas previas.
+
+**Clasificación:** problema supervisado cuya respuesta es una categoría.
+
+**Regresión:** problema supervisado cuya respuesta es un valor numérico.
+
+**Clustering (segmentación):** técnica no supervisada que agrupa elementos similares entre sí.
+
+**Precisión, exhaustividad (recall), F1-score:** métricas para evaluar un modelo supervisado, cada una sensible a un tipo distinto de error.
+
+**Agente de IA:** sistema con autonomía para encadenar decisiones y usar herramientas externas en función de un objetivo, más allá de una única predicción.
+
+**Big data:** datos cuyo volumen, velocidad o variedad superan la capacidad de las herramientas de análisis tradicionales.
+
+**Analítica descriptiva, predictiva y prescriptiva:** tres niveles de madurez analítica, según si responden qué pasó, qué va a pasar, o qué se debería hacer.
+
+**Blockchain:** tecnología de registro distribuido que permite que varias partes confíen en un mismo registro sin depender de un intermediario central.
+
+**Contrato inteligente (smart contract):** código que se ejecuta automáticamente sobre una blockchain cuando se cumplen condiciones predefinidas.
+
+**IaaS, PaaS, SaaS:** los tres niveles de servicio en la nube, según cuánta infraestructura gestiona el proveedor frente a la organización.
+
+## Preguntas de repaso
+
+1. Un banco quiere anticipar qué clientes van a solicitar un crédito en los próximos tres meses. ¿Es este un problema de aprendizaje supervisado o no supervisado? Justifica.
+2. Explica con tus palabras por qué la exactitud (accuracy) puede ser una métrica engañosa, y da un ejemplo distinto al del churn usado en esta unidad.
+3. ¿En qué se diferencia un agente de IA de un modelo de machine learning tradicional como los vistos en la sección 2.1?
+4. Describe una situación en la que convenga más usar analítica descriptiva que predictiva, y justifica por qué ir directo a lo predictivo sería un error en ese caso.
+5. Retoma el marco build vs. buy vs. adopt de la Unidad 1: ¿en qué categoría (build, buy o adopt) ubicarías típicamente la adopción de cloud computing, y por qué?
+
+## Referencias de la unidad
+
+- Davenport, T. H., & Ronanki, R. (2022). *The AI Advantage: How to Put the Artificial Intelligence Revolution to Work*. MIT Press.
+- Wade, M., & Shan, J. (2023). *Hacking Digital: Best Practices to Implement and Accelerate Your Business Transformation*. McGraw-Hill Education.
+- Kane, G. C., Phillips, A. N., Copulsky, J. R., & Andrus, G. R. (2023). *The Technology Fallacy: How People Are the Real Key to Digital Transformation*. MIT Press.

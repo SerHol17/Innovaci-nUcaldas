@@ -215,10 +215,7 @@ Plantilla de referencia para la matriz comparativa de herramientas del taller.
 
 **Paso 4 — Recomendación.** Para cada brecha, el equipo redacta una recomendación justificada: construir, comprar o adoptar, explicando por qué esa opción es la más adecuada según los criterios evaluados.
 
-```{admonition} Entregable de la unidad — primer avance del proyecto final
-:class: important
-Documento breve (1-2 páginas) por equipo con: la organización elegida (sector, tamaño, procesos principales), el diagnóstico de madurez digital por componente, entre dos y tres brechas priorizadas, la matriz comparativa de herramientas para cada brecha, y la recomendación build/buy/adopt justificada. Este documento es la base sobre la que se construirá la estrategia completa en las unidades siguientes.
-```
+
 
 ## Glosario de términos clave
 

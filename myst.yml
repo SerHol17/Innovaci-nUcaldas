@@ -14,10 +14,14 @@ project:
     - big data
     - cloud computing
     - gestión del cambio
-  github: https://github.com/BioAITeamLearning
+  github: https://github.com/SerHol17/Innovaci-nUcaldas
   toc:
     - file: index.md
     - file: Unidad1.md
+    - file: Unidad2.md
+      children:
+        - file: Unidad 2/Unidad2.1.md
+        #- file: Unidad 2/Unidad2.2.md
   exclude:
     - venv/**
     - _build/**
