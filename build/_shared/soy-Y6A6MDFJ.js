@@ -1,1 +1,1 @@
-import{a}from"/build/_shared/chunk-WVYZOZJY.js";import"/build/_shared/chunk-DOYQ5WN6.js";import"/build/_shared/chunk-RAQ24GF6.js";export default a();
+import{a}from"/Innovaci-nUcaldas/build/_shared/chunk-WVYZOZJY.js";import"/Innovaci-nUcaldas/build/_shared/chunk-DOYQ5WN6.js";import"/Innovaci-nUcaldas/build/_shared/chunk-RAQ24GF6.js";export default a();
