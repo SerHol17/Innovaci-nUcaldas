@@ -72,7 +72,7 @@ Evaluar el impacto de la transformación digital en la sostenibilidad y competit
 ::::{grid} 1 1 2 2
 
 :::{grid-item-card}
-:link: Unidad1/sesion1
+:link: Unidad1
 
 **Unidad 1 🧭**
 ^^^
@@ -82,7 +82,7 @@ Conceptos básicos, modelos de referencia, diagnóstico de madurez digital y pan
 :::
 
 :::{grid-item-card}
-:link: Unidad2/sesion1
+:link: Unidad2
 
 **Unidad 2 🤖**
 ^^^
@@ -92,7 +92,7 @@ Inteligencia artificial y machine learning, big data y analítica avanzada, bloc
 :::
 
 :::{grid-item-card}
-:link: Unidad3/sesion1
+:link: Unidad3
 
 **Unidad 3 🧩**
 ^^^
@@ -102,7 +102,7 @@ Diseño de estrategia, análisis de brechas, metodologías ágiles (Scrum, Kanba
 :::
 
 :::{grid-item-card}
-:link: Unidad4/sesion1
+:link: Unidad4
 
 **Unidad 4 🚀**
 ^^^
@@ -112,7 +112,7 @@ Hoja de ruta, integración de tecnologías, evaluación de impacto y ROI, herram
 :::
 
 :::{grid-item-card}
-:link: Unidad5/sesion1
+:link: Unidad5
 
 **Unidad 5 🌱**
 ^^^
