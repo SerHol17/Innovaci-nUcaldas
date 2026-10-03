@@ -35,6 +35,7 @@ project:
         - file: Unidad 2/U4_S1_deltalake
         - file: Unidad 2/Unidad2.3.md
         - file: Unidad 2/Unidad2.3_laboratorio_agentes_gemini
+        - file: Unidad 2/Unidad2_taller_modelo_como_herramienta
     - file: Unidad3.md
     - file: Unidad4.md
     - file: Unidad5.md
