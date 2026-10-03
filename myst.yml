@@ -14,27 +14,30 @@ project:
     - big data
     - cloud computing
     - gestión del cambio
-  github: https://github.com/SerHol17/Innovaci-nUcaldas
+  github: SerHol17/Innovaci-nUcaldas
+  jupyter: true
   toc:
     - file: index.md
     - file: Unidad1.md
     - file: Unidad2.md
       children:
         - file: Unidad 2/Unidad2.1.md
-        - file: Unidad 2/Unidad 2/Unidad2.1_laboratorio_ML
+        - file: Unidad 2/Unidad2.1_laboratorio_ML.ipynb
         - file: Unidad 2/Unidad2.2.md
-        - file: "Unidad 2/U4_datawarehouse"
-        - file: "Unidad 2/U4_S1_datawarehouse"
-
-        - file: "Unidad 2/U4_datalake"
-        - file: "Unidad 2/U4_S1_datalake"
-
-        - file: "Unidad 2/U4_lakehouse"
-        - file: "Unidad 2/U4_S1_lakehouse"
-    
-        - file: "Unidad 2/U4_deltalake"
-        - file: "Unidad 2/U4_S1_deltalake"
+        - file: Unidad 2/Unidad2.2_laboratorio_bigdata_spark
+        - file: Unidad 2/U4_datawarehouse.md
+        - file: Unidad 2/U4_S1_datawarehouse
+        - file: Unidad 2/U4_datalake.md
+        - file: Unidad 2/U4_S1_datalake
+        - file: Unidad 2/U4_lakehouse.md
+        - file: Unidad 2/U4_S1_lakehouse
+        - file: Unidad 2/U4_deltalake.md
+        - file: Unidad 2/U4_S1_deltalake
         - file: Unidad 2/Unidad2.3.md
+        - file: Unidad 2/Unidad2.3_laboratorio_agentes_gemini
+    - file: Unidad3.md
+    - file: Unidad4.md
+    - file: Unidad5.md
   exclude:
     - venv/**
     - _build/**
