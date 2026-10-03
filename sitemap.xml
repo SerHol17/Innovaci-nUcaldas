@@ -13,4 +13,43 @@
   <url>
     <loc>http://localhost:3000/unidad2-1</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/unidad2-1-laboratorio-ml</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/unidad2-2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/unidad2-2-laboratorio-bigdata-spark</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-datawarehouse</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-s1-datawarehouse</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-datalake</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-s1-datalake</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-lakehouse</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-s1-lakehouse</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-deltalake</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/u4-s1-deltalake</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/unidad2-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/unidad2-3-laboratorio-agentes-gemini</loc>
+  </url>
 </urlset>
