@@ -21,7 +21,20 @@ project:
     - file: Unidad2.md
       children:
         - file: Unidad 2/Unidad2.1.md
-        #- file: Unidad 2/Unidad2.2.md
+        - file: Unidad 2/Unidad 2/Unidad2.1_laboratorio_ML
+        - file: Unidad 2/Unidad2.2.md
+        - file: "Unidad 2/U4_datawarehouse"
+        - file: "Unidad 2/U4_S1_datawarehouse"
+
+        - file: "Unidad 2/U4_datalake"
+        - file: "Unidad 2/U4_S1_datalake"
+
+        - file: "Unidad 2/U4_lakehouse"
+        - file: "Unidad 2/U4_S1_lakehouse"
+    
+        - file: "Unidad 2/U4_deltalake"
+        - file: "Unidad 2/U4_S1_deltalake"
+        - file: Unidad 2/Unidad2.3.md
   exclude:
     - venv/**
     - _build/**
