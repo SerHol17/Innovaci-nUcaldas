@@ -1,0 +1,291 @@
+---
+title: Unidad 3.4 · MLOps: Agilidad Aplicada al Ciclo de Vida del Machine Learning
+---
+
+# Unidad 3.4 — MLOps: Agilidad Aplicada al Ciclo de Vida del Machine Learning
+
+```{admonition} Objetivo de la sección
+:class: tip
+Entender qué es MLOps y por qué existe, recorrer las etapas de su ciclo de vida, conocer cómo se implementa en la práctica (componentes, herramientas y niveles de madurez), y aprender a gestionar un proyecto de machine learning con una metodología ágil. Esta sección es la base del taller integrador de la unidad.
+```
+
+En la Unidad 2 se estudió cómo entrenar y evaluar modelos de machine learning. En un curso, o en un notebook, el trabajo suele terminar cuando el modelo alcanza una métrica aceptable. En una organización real, ahí apenas empieza lo difícil: ese modelo tiene que ponerse en producción, ser consultado por otros sistemas o personas, mantenerse funcionando, detectarse cuando deja de funcionar bien, y reentrenarse cuando el mundo cambia. La sección 3.2 mostró cómo DevOps resolvió ese problema para el software tradicional. MLOps hace lo propio para el machine learning, que tiene particularidades que el software convencional no tiene.
+
+## Qué es MLOps y por qué existe
+
+**MLOps** (*Machine Learning Operations*) es el conjunto de prácticas, cultura y herramientas que busca desarrollar, desplegar y mantener modelos de machine learning en producción de forma confiable y eficiente. Combina tres disciplinas: el machine learning (construir el modelo), la ingeniería de datos (conseguir y preparar los datos de forma fiable) y DevOps (automatizar la entrega y la operación).
+
+La razón de ser de MLOps queda clara en un artículo muy citado de Sculley et al. (2015), *Hidden Technical Debt in Machine Learning Systems*. Los autores, ingenieros de Google, observaron que en un sistema real de machine learning el código del modelo en sí es solo una pequeña fracción del sistema completo: lo rodean la recolección y verificación de datos, la extracción de características, la gestión de configuración, la infraestructura de servicio, el monitoreo y las herramientas de análisis. El esfuerzo de ingeniería está mayoritariamente en todo ese entorno, no en el algoritmo.
+
+```{figure} _static/images/u34-sistema-ml-real.jpg
+:name: fig-u34-sistema-ml-real
+:alt: El código del modelo es una pequeña parte de un sistema de machine learning en producción
+:width: 80%
+
+En un sistema real de machine learning, el modelo es solo una pequeña caja rodeada de toda la infraestructura que lo hace funcionar (adaptado de Sculley et al., 2015).
+```
+
+:::{dropdown} Qué debe tener esta imagen
+Diagrama de una caja pequeña central rodeada de cajas más grandes, estilo infografía técnica. Caja central pequeña y de color destacado (naranja suave): "Código del modelo de ML". Alrededor, cajas grandes en azul y gris con las etiquetas: "Recolección de datos", "Verificación de datos", "Extracción de características", "Gestión de configuración", "Infraestructura de servicio", "Monitoreo", "Herramientas de análisis", "Gestión de recursos de cómputo". Las cajas rodeando son claramente mucho más grandes que la central. Fondo blanco, proporción apaisada (16:9).
+:::
+
+### En qué se diferencia de DevOps
+
+Si DevOps ya existe, ¿por qué hace falta algo nuevo? Porque un sistema de machine learning no es solo código. Tiene dos ingredientes adicionales que cambian las reglas:
+
+| Aspecto | Software tradicional (DevOps) | Machine learning (MLOps) |
+|---|---|---|
+| **Qué se versiona** | El código | El código, los datos y el modelo entrenado (y los parámetros que los produjeron) |
+| **Qué determina el comportamiento** | Las reglas que escribe el programador | Los datos con los que se entrenó el modelo |
+| **Cómo se prueba** | Pruebas con resultados esperados exactos | Pruebas estadísticas: el resultado es correcto "con cierta probabilidad" |
+| **Por qué puede fallar en producción** | Errores en el código o la infraestructura | Lo anterior, y además que los datos del mundo real cambien respecto de los de entrenamiento |
+| **Cuándo se "termina"** | El software no cambia si nadie lo cambia | El modelo se degrada solo, con el tiempo, aunque nadie toque el código |
+| **Qué se entrega** | Una aplicación o servicio | Un pipeline completo que puede reentrenar y producir nuevos modelos |
+
+La última fila es la más importante. En MLOps, lo que se pone en producción no es solo un modelo: es el **pipeline** que lo produce, de modo que el modelo pueda regenerarse de forma automática y reproducible cuando haga falta.
+
+## El ciclo de vida de MLOps
+
+El ciclo de vida de un proyecto de machine learning en producción es, como su nombre indica, un ciclo y no una línea recta. Se puede describir en siete etapas:
+
+```{figure} _static/images/u34-ciclo-detallado.jpg
+:name: fig-u34-ciclo-detallado
+:alt: Etapas detalladas del ciclo de vida de MLOps
+:width: 90%
+
+El ciclo de vida de MLOps: el monitoreo en producción retroalimenta las etapas anteriores y reinicia el ciclo.
+```
+
+:::{dropdown} Qué debe tener esta imagen
+Diagrama circular de siete etapas conectadas con flechas, estilo técnico claro. Etapas en orden: "1 Definición del problema", "2 Datos (ingesta, validación, versionado)", "3 Experimentación y entrenamiento", "4 Validación", "5 Empaquetado y registro del modelo", "6 Despliegue", "7 Monitoreo". Una flecha de retorno destacada desde "Monitoreo" hacia "Datos" y hacia "Experimentación y entrenamiento", etiquetada "Reentrenamiento cuando el desempeño se degrada". Un ícono simple por etapa. Paleta de azules y verdes, fondo blanco, proporción cuadrada (1:1).
+:::
+
+### 1. Definición del problema
+
+Todo empieza, otra vez, en la sección 3.1: antes de tocar datos hay que definir qué decisión de negocio se quiere mejorar, cómo se medirá el éxito en términos del negocio (no solo del modelo) y qué restricciones existen (latencia, costo, interpretabilidad, regulación). Un modelo con una métrica excelente que no resuelve ninguna decisión real es un proyecto fallido. Aquí se define también el criterio de éxito mínimo, por ejemplo "recall de al menos 80 % sobre los pacientes que abandonan", que será el que luego valide el pipeline.
+
+### 2. Datos: ingesta, validación y versionado
+
+Los datos son el insumo principal y la fuente más frecuente de problemas. Esta etapa incluye:
+
+- **Ingesta:** traer los datos de sus fuentes de forma automatizada y repetible, en lugar de descargas manuales.
+- **Validación:** comprobar automáticamente que los datos cumplen lo esperado antes de usarlos (columnas presentes, tipos correctos, rangos razonables, proporción de valores nulos aceptable). Un pipeline que entrena en silencio con datos corruptos produce un modelo defectuoso sin que nadie lo note.
+- **Versionado:** guardar qué versión exacta de los datos se usó para entrenar cada modelo. Sin esto es imposible reproducir un resultado ni investigar por qué un modelo se comporta de cierta forma.
+- **Ingeniería de características:** transformar los datos crudos en las variables que consume el modelo. Un error frecuente y costoso es calcular esas variables de una manera durante el entrenamiento y de otra distinta en producción (*training-serving skew*), lo que degrada el modelo sin que haya ningún error visible.
+
+### 3. Experimentación y entrenamiento
+
+Aquí el equipo prueba algoritmos, hiperparámetros y conjuntos de variables. La práctica clave es el **seguimiento de experimentos** (*experiment tracking*): registrar, para cada ejecución, el código, los datos, los parámetros y las métricas obtenidas. Sin ese registro, la experimentación se vuelve una colección de notebooks con nombres como `modelo_final_v3_bueno.ipynb`, de los que nadie recuerda qué configuración produjo el mejor resultado.
+
+### 4. Validación
+
+Antes de que un modelo pase a producción debe superar una serie de comprobaciones automatizadas:
+
+- **Desempeño:** cumple el umbral mínimo de las métricas definidas en la etapa 1, y es al menos tan bueno como el modelo que está actualmente en producción.
+- **Equidad y sesgos:** se comprueba que el desempeño no sea sistemáticamente peor para ciertos grupos (tema que la Unidad 5 desarrolla en la sección de ética).
+- **Robustez:** se prueba con casos límite y datos atípicos.
+- **Documentación:** se registra qué hace el modelo, con qué datos se entrenó, para qué no debe usarse y cuáles son sus limitaciones. Mitchell et al. (2019) propusieron para esto las *model cards*, fichas estandarizadas que acompañan al modelo.
+
+### 5. Empaquetado y registro del modelo
+
+El modelo aprobado se empaqueta junto con todo lo necesario para ejecutarlo (dependencias, entorno, versión de las librerías), normalmente en un **contenedor**, de modo que se comporte igual en el computador del desarrollador y en el servidor de producción. Además se guarda en un **registro de modelos** (*model registry*), un repositorio que lleva el control de las versiones de cada modelo y de su estado (en pruebas, en producción, retirado).
+
+### 6. Despliegue
+
+Desplegar es poner el modelo a disposición de quien lo va a usar. Existen tres formas principales de servirlo:
+
+- **Por lotes (*batch*):** el modelo procesa un conjunto grande de datos de una vez, en horarios programados (por ejemplo, cada noche se calcula el riesgo de abandono de todos los pacientes). Es la más simple y barata.
+- **En línea (*online*):** el modelo se expone como un servicio al que otros sistemas consultan en tiempo real y responde en milisegundos (por ejemplo, una API que devuelve la probabilidad de un cliente en el momento en que llama).
+- **En el dispositivo (*edge*):** el modelo corre directamente en el aparato del usuario o en un equipo local, sin depender de una conexión a un servidor.
+
+Y para reducir el riesgo de poner un modelo nuevo, se usan estrategias de despliegue progresivo:
+
+| Estrategia | Cómo funciona | Cuándo es útil |
+|---|---|---|
+| **Despliegue en sombra (*shadow*)** | El modelo nuevo recibe tráfico real y produce predicciones, pero estas no se usan; solo se comparan con las del modelo actual | Para validar el comportamiento sin ningún riesgo para los usuarios |
+| **Canario (*canary*)** | El modelo nuevo atiende a un porcentaje pequeño del tráfico, que se va ampliando si todo va bien | Para detectar problemas con un impacto limitado |
+| **Prueba A/B** | Dos modelos atienden a grupos distintos y se compara su impacto en una métrica de negocio | Para decidir con evidencia cuál es mejor |
+
+### 7. Monitoreo
+
+El monitoreo es la etapa que distingue a MLOps de un simple despliegue, porque es la que cierra el ciclo. Un modelo en producción se vigila en tres frentes:
+
+- **Salud del sistema:** disponibilidad, tiempos de respuesta, errores, consumo de recursos (lo mismo que en cualquier software).
+- **Calidad de los datos de entrada:** si llegan valores faltantes, fuera de rango o con una distribución distinta a la de entrenamiento.
+- **Desempeño del modelo:** si sigue acertando, que es lo más difícil de medir, porque la respuesta correcta a veces solo se conoce semanas o meses después (por ejemplo, saber si un paciente realmente abandonó el tratamiento).
+
+El fenómeno central que se vigila es la **deriva** (*drift*), que ocurre en dos formas:
+
+```{figure} ../_static/images/u34-drift.jpg
+:name: fig-u34-drift
+:alt: Diferencia entre deriva de datos y deriva de concepto
+:width: 85%
+
+Dos formas de degradación de un modelo: cambian los datos de entrada (deriva de datos) o cambia la relación entre los datos y el resultado (deriva de concepto).
+```
+
+
+- **Deriva de datos (*data drift*):** cambia la distribución de los datos de entrada respecto de los de entrenamiento. Por ejemplo, un modelo de riesgo de abandono entrenado con pacientes de una ciudad empieza a recibir pacientes de otra región con un perfil distinto. Se puede detectar con pruebas estadísticas que comparan las distribuciones (como la prueba de Kolmogorov-Smirnov o el índice de estabilidad poblacional).
+- **Deriva de concepto (*concept drift*):** cambia la relación entre las entradas y lo que se quiere predecir. Por ejemplo, tras un cambio de política de la clínica, las mismas características de un paciente ya no implican el mismo riesgo de abandono. Es más difícil de detectar, porque las entradas pueden verse normales mientras el modelo se equivoca cada vez más.
+
+Cuando el monitoreo detecta una degradación (o cuando se acumulan suficientes datos nuevos), se activa el **reentrenamiento**, y el ciclo vuelve a empezar. Los disparadores pueden ser periódicos (cada mes), basados en eventos (cuando la deriva supera un umbral) o basados en el desempeño (cuando una métrica cae por debajo del mínimo).
+
+## Cómo se implementa MLOps
+
+MLOps no es un producto que se compra: es un conjunto de capacidades que se construyen gradualmente. Una forma útil de entender la implementación es por niveles de madurez, como los describe la guía de arquitectura de Google Cloud sobre MLOps:
+
+```{figure} ../_static/images/u34-niveles-madurez.jpg
+:name: fig-u34-niveles-madurez
+:alt: Tres niveles de madurez de MLOps
+:width: 85%
+
+Los tres niveles de madurez de MLOps: del proceso manual a la automatización completa de entrenamiento y despliegue.
+```
+
+
+- **Nivel 0, proceso manual:** el científico de datos entrena el modelo en un notebook y se lo entrega al equipo de ingeniería, que lo despliega a mano. Funciona para empezar o para modelos que cambian poco, pero es lento, difícil de reproducir y sin monitoreo sistemático. Es el punto de partida de la mayoría de las organizaciones.
+- **Nivel 1, automatización del pipeline de ML:** el proceso de entrenamiento se convierte en un pipeline automatizado (datos, validación, entrenamiento, evaluación, registro), de modo que el modelo puede reentrenarse de forma continua con datos nuevos. Se incorporan la validación automática de datos y de modelos.
+- **Nivel 2, automatización de CI/CD del pipeline:** además de automatizar el pipeline, se automatiza la integración, las pruebas y el despliegue del propio pipeline cada vez que el código cambia. Es el nivel que necesitan las organizaciones que mantienen muchos modelos y los actualizan con frecuencia.
+
+No todas las organizaciones necesitan llegar al nivel 2, y es un error invertir en ese nivel para un proyecto con un solo modelo que cambia dos veces al año. El nivel adecuado depende de cuántos modelos se mantienen, con qué frecuencia cambian los datos, y qué tan costosa es una falla (de nuevo, el criterio de la sección 3.1: la herramienta se elige según el problema).
+
+### Componentes de una implementación
+
+Una implementación básica se apoya en componentes que cumplen funciones concretas. Los nombres de herramientas son ejemplos: el mercado cambia rápido y lo importante es entender la función de cada pieza.
+
+| Función | Para qué sirve | Ejemplos de herramientas |
+|---|---|---|
+| **Control de versiones del código** | Historial y colaboración sobre el código | Git, GitHub, GitLab |
+| **Versionado de datos y modelos** | Saber qué datos y qué modelo produjo cada resultado | DVC, Git LFS |
+| **Seguimiento de experimentos y registro de modelos** | Registrar ejecuciones, métricas y versiones de modelos | MLflow, Weights & Biases |
+| **Contenedores** | Empaquetar el modelo con su entorno para que corra igual en todas partes | Docker |
+| **Servicio del modelo** | Exponer el modelo para que otros sistemas lo consulten | FastAPI, servidores de modelos especializados |
+| **Automatización CI/CD** | Ejecutar pruebas y despliegues automáticamente ante cada cambio | GitHub Actions, GitLab CI |
+| **Orquestación de pipelines** | Programar y coordinar los pasos del pipeline de datos y entrenamiento | Airflow, Prefect, Kubeflow |
+| **Monitoreo** | Vigilar la salud del sistema y la deriva de los datos | Prometheus y Grafana, Evidently |
+| **Almacén de características (*feature store*)** | Centralizar las variables para usarlas igual en entrenamiento y producción | Feast |
+
+Para el taller de esta unidad no hace falta usar todo. Una implementación mínima y suficiente para aprender se compone de: Git para el código, un registro de experimentos (como MLflow), un contenedor Docker, una API sencilla que sirva el modelo y una automatización básica de pruebas con GitHub Actions. Es poco, pero ya cubre las ideas centrales: reproducibilidad, trazabilidad y entrega automatizada.
+
+### Roles en un equipo de MLOps
+
+Un proyecto de ML en producción rara vez lo hace una sola persona. Los roles típicos son: el **científico de datos** (construye y evalúa los modelos), el **ingeniero de datos** (construye los pipelines que traen y preparan los datos), el **ingeniero de ML** (lleva los modelos a producción y construye el pipeline), el **ingeniero de plataforma o DevOps** (mantiene la infraestructura) y el **dueño del producto** (representa la necesidad del negocio). En equipos pequeños, una misma persona asume varios roles, y eso es normal; lo importante es que las responsabilidades estén cubiertas.
+
+## Gestionar un proyecto de ML con una metodología ágil
+
+Un proyecto de machine learning es un buen candidato para metodologías ágiles, porque su incertidumbre es alta: no se sabe de antemano qué desempeño se puede alcanzar con los datos disponibles, y el aprendizaje de cada iteración cambia el plan. Pero hay adaptaciones que conviene conocer.
+
+**Historias de usuario con sentido de negocio.** Una historia mal formulada es "entrenar un modelo de random forest". Una bien formulada es "como coordinadora, quiero saber cada mañana qué pacientes tienen más riesgo de abandonar, para contactarlos primero". El modelo es un medio, no la historia.
+
+**La investigación se acota en el tiempo.** Como no se sabe si un enfoque funcionará, es útil plantear la experimentación como *spikes* (investigaciones con duración fija y una pregunta concreta, por ejemplo "¿podemos alcanzar un recall del 70 % con los datos actuales? Dos días para averiguarlo"). Así se evita que la experimentación se prolongue indefinidamente.
+
+**Una Definición de Hecho propia del ML.** La definición de hecho de la sección 3.2 se adapta para incluir criterios específicos. Por ejemplo, una historia de modelo podría considerarse terminada cuando: el experimento está registrado y es reproducible, las métricas superan el umbral acordado, el modelo está documentado en su *model card*, las pruebas automáticas pasan y el modelo está registrado con su versión.
+
+**El primer sprint entrega el esqueleto, no el mejor modelo.** Una práctica recomendada es construir primero un pipeline completo de extremo a extremo con un modelo muy simple (incluso una regla básica o un modelo trivial) que vaya de los datos a producción, y solo después mejorar el modelo. Así se descubren temprano los problemas de integración, que son los más caros, y se obtiene valor visible desde las primeras iteraciones.
+
+```{figure} ../_static/images/u34-tablero-mlops.jpg
+:name: fig-u34-tablero-mlops
+:alt: Tablero Kanban adaptado a un proyecto de MLOps
+:width: 90%
+
+Un tablero adaptado al ciclo de MLOps: las columnas reflejan las etapas del ciclo y los límites de WIP evitan acumular trabajo sin terminar.
+```
+
+
+Para ilustrar un primer sprint, retomando la clínica de las secciones anteriores y su modelo de riesgo de abandono:
+
+| Historia | Etapa del ciclo | Criterio de hecho |
+|---|---|---|
+| Como equipo, queremos un proceso automático que cargue y valide los datos de citas | Datos | Carga programada, con validación de esquema y de valores nulos, y registro de errores |
+| Como coordinadora, quiero una primera estimación del riesgo por paciente, aunque sea simple | Experimentación | Modelo base entrenado, experimento registrado y reproducible |
+| Como equipo, queremos saber si el modelo base supera el umbral mínimo | Validación | Métricas calculadas sobre datos de prueba y comparadas con el umbral acordado |
+| Como coordinadora, quiero consultar el riesgo de un paciente desde el tablero | Despliegue | API que devuelve el riesgo, empaquetada en contenedor y con pruebas automáticas |
+
+Al final del sprint existe un pipeline extremo a extremo, aunque el modelo sea modesto. El sprint siguiente puede dedicarse a mejorar el modelo, a agregar monitoreo o a ampliar los datos, ya sobre una base que funciona.
+
+## Riesgos y errores frecuentes
+
+- **Saltar de los notebooks a producción sin pasos intermedios:** un notebook explora bien, pero no es un sistema. Pasar su contenido a código modular, con pruebas y versionado, es parte del trabajo.
+- **No versionar los datos:** sin saber con qué datos se entrenó un modelo, es imposible reproducirlo o investigar un error.
+- **Desplegar sin monitoreo:** un modelo sin vigilancia se degrada en silencio y la organización sigue tomando decisiones con él, creyéndolo vigente.
+- **Medir solo la métrica del modelo:** un modelo puede mejorar su exactitud y no mejorar ninguna decisión de negocio. Hay que enlazar el monitoreo con los indicadores de resultado de la sección 3.3.
+- **Sobreingeniería:** construir una plataforma completa de MLOps antes de tener un modelo que merezca ese esfuerzo. Se comienza simple y se automatiza a medida que el dolor lo justifica.
+- **Ignorar el factor humano:** la mejor infraestructura no sirve si los usuarios no confían en el modelo o no saben usarlo; la gestión del cambio de la sección 3.3 aplica por completo.
+
+## Taller integrador de la unidad
+
+El taller reúne las cuatro secciones de la Unidad 3. Cada equipo gestiona, con una metodología ágil, un proyecto de machine learning llevándolo por las etapas del ciclo de MLOps.
+
+```{admonition} Enunciado del taller
+:class: important
+**Formato:** grupal (2 a 3 estudiantes).
+
+**Objetivo:** gestionar con Scrum o Kanban un proyecto de machine learning, desde la definición del problema hasta un modelo desplegado y con monitoreo básico, evidenciando prácticas de MLOps.
+
+**Entregables:**
+
+1. **Definición estratégica (sección 3.1):** una descripción de una página con el objetivo de negocio que el modelo apoya, el criterio de éxito mínimo y una justificación de por qué esta iniciativa es prioritaria (usando la matriz de impacto y esfuerzo).
+2. **Gestión ágil (sección 3.2):** el tablero del proyecto (Scrum con al menos dos sprints, o Kanban con límites de WIP justificados), con las historias de usuario, la Definición de Hecho adaptada a ML y evidencia de al menos una retrospectiva o revisión del flujo.
+3. **Pipeline MLOps (sección 3.4):** un repositorio con, como mínimo, estas cuatro evidencias: (a) el código bajo control de versiones; (b) al menos tres experimentos registrados con sus parámetros y métricas; (c) el modelo empaquetado y servido mediante una API; y (d) una automatización básica que ejecute pruebas ante cada cambio.
+4. **Monitoreo y reentrenamiento:** una descripción de qué se monitorearía en producción (datos, desempeño, sistema), qué señal de deriva vigilarían y qué disparador de reentrenamiento definirían.
+5. **Plan de adopción (sección 3.3):** una página con los interesados del proyecto, las dos principales resistencias previsibles y el plan de capacitación para quienes usarán el modelo.
+```
+
+Criterios de evaluación sugeridos:
+
+| Criterio | Qué se valora |
+|---|---|
+| **Alineación estratégica** | El proyecto parte de un objetivo de negocio claro y se justifica su prioridad |
+| **Uso de la metodología ágil** | Las historias tienen sentido de negocio; el tablero refleja el trabajo real; hay evidencia de mejora (retrospectiva o ajuste del flujo) |
+| **Calidad del pipeline** | Reproducibilidad, trazabilidad de experimentos, modelo servido y pruebas automáticas funcionando |
+| **Pensamiento sobre operación** | El plan de monitoreo y de reentrenamiento es concreto y realista |
+| **Gestión del cambio** | El plan de adopción identifica interesados y resistencias reales, y propone acciones coherentes |
+
+Un consejo para los equipos: el objetivo del taller no es obtener el mejor modelo, sino demostrar que se sabe gestionar un proyecto de ML de punta a punta. Un modelo modesto dentro de un pipeline completo, trazable y bien gestionado vale más que un modelo excelente en un notebook aislado.
+
+## Glosario de términos clave
+
+**MLOps (Machine Learning Operations):** conjunto de prácticas, cultura y herramientas para desarrollar, desplegar y mantener modelos de machine learning en producción de forma confiable.
+
+**Pipeline de ML:** secuencia automatizada de pasos que lleva de los datos a un modelo entrenado, validado y registrado.
+
+**Versionado de datos:** registro de qué versión exacta de los datos se utilizó para entrenar cada modelo.
+
+**Seguimiento de experimentos (experiment tracking):** registro del código, los datos, los parámetros y las métricas de cada ejecución de entrenamiento.
+
+**Training-serving skew:** diferencia entre cómo se calculan las variables durante el entrenamiento y cómo se calculan en producción, que degrada el modelo.
+
+**Model card:** ficha estandarizada que documenta qué hace un modelo, con qué datos se entrenó, sus limitaciones y usos no recomendados.
+
+**Registro de modelos (model registry):** repositorio que controla las versiones de los modelos y su estado.
+
+**Despliegue en sombra, canario y prueba A/B:** estrategias de despliegue progresivo que reducen el riesgo de poner un modelo nuevo en producción.
+
+**Deriva de datos (data drift):** cambio en la distribución de los datos de entrada respecto de los de entrenamiento.
+
+**Deriva de concepto (concept drift):** cambio en la relación entre los datos de entrada y el resultado que se quiere predecir.
+
+**Reentrenamiento:** generación de un nuevo modelo con datos actualizados, activada por tiempo, por eventos o por degradación del desempeño.
+
+**Spike:** investigación acotada en el tiempo y con una pregunta concreta, usada en metodologías ágiles para reducir incertidumbre.
+
+**Feature store:** almacén centralizado de variables que garantiza usarlas de forma idéntica en entrenamiento y producción.
+
+## Preguntas de repaso
+
+1. Explica con tus palabras por qué, según Sculley et al. (2015), el modelo es "solo una pequeña parte" de un sistema de machine learning en producción. ¿Qué implica esto para la planificación de un proyecto?
+2. Menciona tres diferencias entre DevOps tradicional y MLOps, y explica por qué una de ellas obliga a monitorear un modelo aun cuando nadie haya modificado el código.
+3. Un modelo de predicción de demanda funcionaba bien durante un año y, de repente, sus errores aumentan, sin ningún cambio de código. Describe dos hipótesis posibles (una de deriva de datos y una de deriva de concepto) y cómo las comprobarías.
+4. ¿En qué consiste el *training-serving skew* y por qué es difícil de detectar? Propón una práctica que lo prevenga.
+5. Una pyme tiene un único modelo de clasificación que se actualiza dos veces al año. ¿Qué nivel de madurez de MLOps le recomendarías y por qué un nivel 2 sería un exceso?
+6. Redacta una Definición de Hecho de cuatro criterios para una historia de usuario de un modelo de machine learning, y explica en qué se diferencia de la de una historia de software tradicional.
+7. Explica por qué se recomienda que el primer sprint de un proyecto de ML entregue un pipeline de extremo a extremo con un modelo simple, en lugar de dedicarse a conseguir el mejor modelo posible.
+
+## Referencias de la sección
+
+- Sculley, D., et al. (2015). Hidden technical debt in machine learning systems. *Advances in Neural Information Processing Systems (NeurIPS)*, 28.
+- Mitchell, M., et al. (2019). Model cards for model reporting. *Proceedings of the Conference on Fairness, Accountability, and Transparency (FAT\*)*.
+- Google Cloud (s. f.). *MLOps: Continuous delivery and automation pipelines in machine learning*. Guía de arquitectura de Google Cloud.
+- Kim, G., Humble, J., Debois, P., & Willis, J. (2016). *The DevOps Handbook*. IT Revolution Press.
+- Forsgren, N., Humble, J., & Kim, G. (2018). *Accelerate: The Science of Lean Software and DevOps*. IT Revolution Press.
+- Schwaber, K., & Sutherland, J. (2020). *La Guía de Scrum*. scrumguides.org.

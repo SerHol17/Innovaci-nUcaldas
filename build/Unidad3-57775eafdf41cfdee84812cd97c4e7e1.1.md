@@ -1,0 +1,172 @@
+---
+title: Unidad 3.1 · Diseño de Estrategias de Transformación Digital
+---
+
+# Unidad 3.1 — Diseño de Estrategias de Transformación Digital
+
+```{admonition} Objetivo de la sección
+:class: tip
+Aprender a diseñar una estrategia de transformación digital que parta de los objetivos reales de la organización (y no de la tecnología de moda), y a usar el análisis de brechas como herramienta para decidir qué hacer primero, qué dejar para después y qué descartar.
+```
+
+En la Unidad 2 se estudiaron las tecnologías que habilitan la transformación digital: machine learning, big data, agentes, blockchain y cloud. Pero tener acceso a esas tecnologías no es una estrategia. Una estrategia responde a otra pregunta: de todo lo que se podría hacer, ¿qué conviene hacer, en qué orden, y para lograr qué resultado de negocio? Esta sección desarrolla cómo se construye esa respuesta de forma sistemática.
+
+## Estrategia digital vs. estrategia de negocio
+
+Una confusión muy frecuente en las organizaciones es tratar la "estrategia digital" como un documento aparte, elaborado por el área de tecnología, que corre en paralelo a la estrategia de la empresa. La literatura académica lleva décadas señalando que ese enfoque tiende a fallar. Henderson y Venkatraman (1993) propusieron en su *Strategic Alignment Model* que el valor de la tecnología solo aparece cuando hay coherencia entre cuatro dominios: la estrategia de negocio, la estrategia de tecnología, la estructura organizacional y los procesos, y la infraestructura y capacidades de tecnología. Si alguno de esos cuatro se mueve sin que los otros se ajusten, la inversión no rinde.
+
+Bharadwaj et al. (2013) llevaron esa idea un paso más allá al plantear que, en la era digital, la estrategia de tecnología ya no debe tratarse como una función de soporte subordinada a la estrategia de negocio, sino como parte integral de ella: la pregunta ya no es "¿cómo usamos la tecnología para ejecutar nuestra estrategia?", sino "¿qué estrategia de negocio nos habilita la tecnología que antes no era posible?". Esto es lo que se conoce como **estrategia de negocio digital**.
+
+```{figure} ../_static/images/u31-alineacion-henderson.jpg
+:name: fig-u31-alineacion-henderson
+:alt: Modelo de alineación estratégica entre negocio y tecnología
+:width: 80%
+
+Los cuatro dominios del modelo de alineación estratégica: el valor aparece cuando todos se mueven de forma coherente.
+```
+
+
+
+Un caso histórico ayuda a ver por qué esto importa. Kodak fue una de las empresas pioneras de la fotografía digital: uno de sus ingenieros, Steven Sasson, construyó el primer prototipo de cámara digital en 1975. El problema no fue de tecnología sino de estrategia: la empresa tenía la capacidad técnica pero su modelo de negocio dependía de la venta de película química, y la organización no logró alinear su estrategia con una tecnología que canibalizaba su propio negocio principal. En el extremo opuesto, Netflix empezó alquilando DVD por correo y en 2007 lanzó su servicio de streaming, aun cuando eso afectaba su propio negocio de envíos físicos; la decisión fue estratégica antes que tecnológica. La diferencia entre ambas historias no es quién tenía la mejor tecnología, sino quién alineó la estrategia de negocio con ella a tiempo.
+
+## De los objetivos organizacionales a las iniciativas digitales
+
+Una estrategia útil tiene una cadena de trazabilidad: cada iniciativa digital debe poder conectarse hacia arriba con un objetivo de negocio, y cada objetivo de negocio con la visión de la organización. Si una iniciativa no logra conectarse con ningún objetivo, probablemente es tecnología buscando un problema.
+
+Existen varias herramientas para construir esa cadena. Tres de las más usadas son:
+
+- **Balanced Scorecard (Kaplan y Norton, 1992):** traduce la estrategia en objetivos medibles agrupados en cuatro perspectivas: financiera, clientes, procesos internos, y aprendizaje y crecimiento. Es útil porque obliga a mirar más allá de lo financiero: una iniciativa digital puede no generar ingresos directos este año, pero sí mejorar un proceso interno que lo hará el próximo.
+- **OKR (Objectives and Key Results):** popularizado por John Doerr (2018) a partir de su uso en Intel y Google, define un objetivo cualitativo y ambicioso ("ser la clínica con menor tiempo de espera de la ciudad") acompañado de dos a cinco resultados clave medibles ("reducir el tiempo promedio de espera de 40 a 20 minutos"). Su ventaja es la agilidad: se revisan por trimestre, lo que encaja bien con las metodologías ágiles de la sección 3.2.
+- **Business Model Canvas (Osterwalder y Pigneur, 2010):** describe el modelo de negocio en nueve bloques (segmentos de clientes, propuesta de valor, canales, relación con clientes, fuentes de ingreso, recursos clave, actividades clave, aliados clave y estructura de costos). Es particularmente útil cuando la transformación digital no solo mejora un proceso sino que cambia el modelo de negocio mismo.
+
+```{figure} ../_static/images/u31-cascada-estrategica.jpg
+:name: fig-u31-cascada-estrategica
+:alt: Cascada de la visión de la organización hasta las iniciativas digitales
+:width: 75%
+
+Cada iniciativa digital debe poder rastrearse hacia arriba hasta un objetivo de negocio y la visión de la organización.
+```
+
+
+Para ver la cadena funcionando, imagínese una clínica privada mediana con la visión de "ser la clínica preferida de la región por la calidad de su atención". Un objetivo estratégico derivado podría ser "reducir el abandono de pacientes antes de completar su tratamiento". Eso exige capacidades como saber qué pacientes tienen riesgo de abandonar y poder contactarlos a tiempo. De ahí surgen iniciativas digitales concretas: un modelo predictivo de abandono (Unidad 2.1), un agente que reprograma citas automáticamente (Unidad 2.3), y un tablero de seguimiento para los coordinadores. Cada iniciativa se justifica hacia arriba. Si alguien propone "montar un blockchain para el historial clínico" y no puede conectarlo con ningún objetivo, la pregunta correcta es qué problema real resolvería (recuérdese la prueba de tres preguntas de la Unidad 2.4).
+
+## Diagnóstico de madurez digital
+
+Antes de decidir adónde ir hay que saber dónde se está parado. El **diagnóstico de madurez digital** evalúa a la organización en varias dimensiones y la ubica en una escala. Westerman, Bonnet y McAfee (2014) propusieron, en *Leading Digital*, una matriz de dos ejes que ya se vio en la Unidad 1: la **capacidad digital** (qué tan bien usa la organización la tecnología para transformar sus operaciones y su experiencia de cliente) y la **capacidad de liderazgo** (qué tan bien define la visión, gobierna y mueve a la organización). Del cruce salen cuatro perfiles: Beginners, Fashionistas, Conservatives y Digirati.
+
+Esa matriz da un panorama general, pero en la práctica se necesita un diagnóstico más granular para decidir acciones. Un diagnóstico útil evalúa, como mínimo, estas dimensiones:
+
+| Dimensión | Pregunta clave | Ejemplo de evidencia |
+|---|---|---|
+| **Estrategia** | ¿Existe una visión digital conectada con los objetivos del negocio? | Documento de estrategia, OKR con componente digital |
+| **Datos** | ¿Los datos están disponibles, de buena calidad y accesibles para quien los necesita? | Existencia de un repositorio central, procesos de calidad de datos |
+| **Tecnología** | ¿La infraestructura y los sistemas soportan lo que se quiere hacer? | Sistemas heredados, nivel de integración, uso de nube |
+| **Procesos** | ¿Los procesos clave están definidos, medidos y automatizados donde conviene? | Procesos documentados, nivel de automatización |
+| **Personas y habilidades** | ¿El talento tiene las competencias que se requieren? | Inventario de habilidades, brechas de capacitación |
+| **Cultura y liderazgo** | ¿La organización tolera la experimentación y toma decisiones con datos? | Encuestas de clima, cómo se manejan los errores |
+| **Gobierno y riesgo** | ¿Hay reglas claras sobre seguridad, privacidad y responsabilidad? | Políticas de datos, cumplimiento regulatorio |
+
+Cada dimensión se puntúa, por ejemplo, en una escala de 1 (inexistente o ad hoc) a 5 (optimizado y mejorado continuamente), con evidencia concreta que respalde cada puntaje. El error más común es puntuar por percepción ("creo que estamos en 4") en lugar de por evidencia ("tenemos un repositorio central, pero solo dos de las cinco áreas lo usan, así que estamos en 2").
+
+## Análisis de brechas (gap analysis)
+
+El análisis de brechas es la herramienta que convierte el diagnóstico en acciones. Su lógica es simple: se compara el **estado actual (as-is)** con el **estado deseado (to-be)** en cada dimensión, y la diferencia entre ambos es la brecha que hay que cerrar.
+
+El estado deseado no se inventa: se deriva de los objetivos estratégicos de la sección anterior. Si el objetivo es reducir el abandono de pacientes mediante contacto proactivo, el estado deseado en la dimensión de datos incluye tener un historial integrado de cada paciente, y en la dimensión de personas incluye contar con alguien capaz de mantener un modelo predictivo en producción.
+
+```{figure} ../_static/images/u31-analisis-brechas.jpg
+:name: fig-u31-analisis-brechas
+:alt: Esquema del análisis de brechas entre el estado actual y el estado deseado
+:width: 85%
+
+El análisis de brechas compara, dimensión por dimensión, dónde está la organización y dónde necesita estar para cumplir sus objetivos.
+```
+
+
+Un ejemplo con la misma clínica ilustra cómo se ve el resultado en la práctica:
+
+| Dimensión | Estado actual | Estado deseado | Brecha | Acción posible |
+|---|---|---|---|---|
+| Datos | Historiales en tres sistemas que no se comunican (2/5) | Historial integrado por paciente (4/5) | Alta | Proyecto de integración de datos |
+| Tecnología | Servidores propios sin capacidad de escalar (2/5) | Infraestructura elástica para modelos y tableros (4/5) | Alta | Evaluar migración parcial a nube |
+| Procesos | Agendamiento de citas manual por teléfono (2/5) | Agendamiento automatizado con recordatorios (4/5) | Media | Piloto de agente de reprogramación |
+| Personas | Sin perfil de analítica de datos (1/5) | Un equipo mínimo de analítica (3/5) | Alta | Contratar o capacitar |
+| Cultura | Decisiones por intuición del coordinador (2/5) | Decisiones apoyadas en datos (3/5) | Media | Capacitación y tableros de uso diario |
+| Gobierno | Consentimientos de datos sin estandarizar (2/5) | Política de datos de salud documentada (4/5) | Alta | Elaborar política y revisar cumplimiento legal |
+
+Hay tres precauciones al hacer este análisis. Primero, no todas las brechas hay que cerrarlas: una brecha en una dimensión que no es crítica para el objetivo puede dejarse abierta. Segundo, las brechas se interrelacionan: de poco sirve un modelo predictivo excelente si la brecha de datos hace que se entrene con información incompleta. Tercero, la brecha más grande no siempre es la más urgente, lo que lleva al siguiente paso: priorizar.
+
+## Priorización de iniciativas
+
+Un análisis de brechas bien hecho casi siempre produce más acciones de las que la organización puede ejecutar a la vez. Priorizar es decidir qué se hace primero. Una herramienta simple y muy usada es la **matriz de impacto y esfuerzo**, que ubica cada iniciativa según el valor que aporta al objetivo estratégico y el esfuerzo (costo, tiempo, complejidad) que requiere.
+
+```{figure} _static/images/u31-matriz-priorizacion.jpg
+:name: fig-u31-matriz-priorizacion
+:alt: Matriz de priorización de iniciativas según impacto y esfuerzo
+:width: 75%
+
+Las iniciativas de alto impacto y bajo esfuerzo (victorias rápidas) suelen ir primero; las de alto esfuerzo y bajo impacto suelen descartarse.
+```
+
+:::{dropdown} Qué debe tener esta imagen
+Matriz 2x2 estilo infografía de consultoría. Eje horizontal "Esfuerzo" (bajo a la izquierda, alto a la derecha); eje vertical "Impacto" (bajo abajo, alto arriba). Cuadrantes etiquetados: arriba-izquierda "Victorias rápidas (hacer primero)", arriba-derecha "Proyectos estratégicos (planificar con cuidado)", abajo-izquierda "Mejoras menores (hacer si sobra capacidad)", abajo-derecha "Evitar o replantear". Varios puntos de colores distribuidos en los cuadrantes representando iniciativas. Paleta de verdes para el cuadrante de victorias rápidas, azules para estratégicos, grises para el resto; fondo blanco, proporción cuadrada (1:1).
+:::
+
+Aplicada a la clínica: el piloto de recordatorios automáticos de citas es una victoria rápida (poco esfuerzo, impacto visible sobre el abandono), mientras que la integración completa de los tres sistemas de historiales es un proyecto estratégico (alto esfuerzo pero condición para todo lo demás). La política de datos de salud puede ser una acción de bajo esfuerzo y alto impacto en riesgo, que conviene hacer temprano.
+
+La matriz no decide sola. Hay dependencias entre iniciativas (no se puede hacer analítica avanzada sin resolver antes la integración de datos) y restricciones de presupuesto y de capacidad del equipo. Por eso el resultado de la priorización alimenta la **hoja de ruta** que se desarrolla en la Unidad 4, donde esas iniciativas se ordenan en el tiempo.
+
+## Errores frecuentes al diseñar una estrategia digital
+
+Kane et al. (2023) argumentan en *The Technology Fallacy* que el error de fondo es creer que la transformación digital es principalmente un problema de tecnología. Algunos errores concretos que se derivan de esa idea:
+
+- **Empezar por la herramienta:** "necesitamos inteligencia artificial" no es un objetivo, es un medio. La pregunta de partida es qué resultado de negocio se quiere mejorar.
+- **Diagnosticar sin evidencia:** puntuar la madurez por percepción en lugar de por datos verificables lleva a estrategias construidas sobre una imagen falsa de la organización.
+- **Ignorar las brechas humanas y culturales:** concentrarse solo en las brechas tecnológicas porque son más fáciles de medir y de comprar. La sección 3.3 desarrolla por qué esto suele ser fatal.
+- **Querer cerrar todas las brechas a la vez:** sin priorizar, los recursos se diluyen y nada termina. Una estrategia es tanto lo que se decide no hacer como lo que se decide hacer.
+- **Estrategia estática:** tratar el documento como algo que se escribe una vez. El entorno cambia, y la estrategia debe revisarse periódicamente (por ejemplo, con ciclos trimestrales de OKR).
+
+```{admonition} Para tu proyecto final
+:class: important
+Para la organización elegida en tu proyecto final: (1) formula un objetivo estratégico de negocio que la transformación digital deba apoyar; (2) realiza un diagnóstico de madurez en al menos cinco de las siete dimensiones de esta sección, con evidencia concreta para cada puntaje; (3) construye la tabla de análisis de brechas con estado actual, estado deseado y acción posible; y (4) ubica las iniciativas resultantes en una matriz de impacto y esfuerzo, justificando cuáles irían primero.
+```
+
+## Glosario de términos clave
+
+**Estrategia de negocio digital:** estrategia de negocio que integra la tecnología como parte constitutiva del modelo de negocio, y no como función de soporte separada.
+
+**Alineación estratégica:** coherencia entre la estrategia de negocio, la estrategia de tecnología, la estructura organizacional y la infraestructura tecnológica.
+
+**Balanced Scorecard:** marco que traduce la estrategia en objetivos medibles agrupados en cuatro perspectivas: financiera, clientes, procesos internos, y aprendizaje y crecimiento.
+
+**OKR (Objectives and Key Results):** método que define un objetivo cualitativo y de dos a cinco resultados clave medibles, revisados en ciclos cortos.
+
+**Business Model Canvas:** herramienta que describe el modelo de negocio en nueve bloques.
+
+**Madurez digital:** grado en que una organización ha incorporado capacidades digitales en sus procesos, su gente y su cultura.
+
+**Estado actual (as-is) y estado deseado (to-be):** los dos extremos que se comparan en un análisis de brechas.
+
+**Análisis de brechas (gap analysis):** comparación sistemática entre el estado actual y el deseado, que identifica qué falta para cerrar la distancia.
+
+**Matriz de impacto y esfuerzo:** herramienta de priorización que ubica las iniciativas según el valor que aportan y el esfuerzo que requieren.
+
+**Victoria rápida (quick win):** iniciativa de bajo esfuerzo y alto impacto, que genera resultados visibles temprano.
+
+## Preguntas de repaso
+
+1. Explica con tus palabras por qué tratar la estrategia digital como un documento aparte de la estrategia de negocio tiende a fracasar, usando el modelo de alineación de Henderson y Venkatraman.
+2. Elige una organización que conozcas y construye una cadena de trazabilidad completa: visión, un objetivo estratégico, una capacidad necesaria y una iniciativa digital concreta.
+3. ¿Por qué puntuar la madurez digital "por percepción" es un error? Propón dos ejemplos de evidencia que sustituirían una percepción.
+4. En un análisis de brechas, ¿por qué la brecha más grande no siempre es la que se debe cerrar primero? Da un ejemplo.
+5. Aplica la matriz de impacto y esfuerzo a cuatro iniciativas digitales de una organización de tu elección y justifica en qué orden las ejecutarías.
+
+## Referencias de la sección
+
+- Henderson, J. C., & Venkatraman, N. (1993). Strategic alignment: Leveraging information technology for transforming organizations. *IBM Systems Journal*, 32(1), 4-16.
+- Bharadwaj, A., El Sawy, O. A., Pavlou, P. A., & Venkatraman, N. (2013). Digital business strategy: Toward a next generation of insights. *MIS Quarterly*, 37(2), 471-482.
+- Kaplan, R. S., & Norton, D. P. (1992). The balanced scorecard: Measures that drive performance. *Harvard Business Review*, 70(1), 71-79.
+- Doerr, J. (2018). *Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs*. Portfolio/Penguin.
+- Osterwalder, A., & Pigneur, Y. (2010). *Business Model Generation*. John Wiley & Sons.
+- Westerman, G., Bonnet, D., & McAfee, A. (2014). *Leading Digital: Turning Technology into Business Transformation*. Harvard Business Review Press.
+- Kane, G. C., Phillips, A. N., Copulsky, J. R., & Andrus, G. R. (2023). *The Technology Fallacy: How People Are the Real Key to Digital Transformation*. MIT Press.
